@@ -1,15 +1,29 @@
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { Router } from "express";
 import { db } from "../db";
-import { processRun } from "../db/schema";
+import { fieldProcessingStatus, processRun } from "../db/schema";
 
 const router = Router();
 
 router.get("/", async (req, res) => {
   try {
     const runs = await db
-      .select()
+      .select({
+        id: processRun.id,
+        fieldId: processRun.fieldId,
+        status: processRun.status,
+        dataSnapshotId: processRun.dataSnapshotId,
+        fieldProcessingStatusId: processRun.fieldProcessingStatusId,
+        workflowMetadata: processRun.workflowMetadata,
+        createdAt: processRun.createdAt,
+        updatedAt: processRun.updatedAt,
+        fieldStatus: fieldProcessingStatus.status,
+      })
       .from(processRun)
+      .leftJoin(
+        fieldProcessingStatus,
+        eq(processRun.fieldProcessingStatusId, fieldProcessingStatus.id)
+      )
       .orderBy(desc(processRun.createdAt));
 
     // TODO: james add it here
