@@ -54,10 +54,9 @@ router.post('/api/process-run', async (req, res) => {
   }
 });
 
-router.put('/api/process-run/:id', async (req, res) => {
+router.put('/api/process-run', async (req, res) => {
   try {
-    const { id } = req.params;
-    const { status } = req.body;
+    const { id, status } = req.body;
 
     if (!id) {
       return res.status(400).json({ error: 'Process run ID is required' });
