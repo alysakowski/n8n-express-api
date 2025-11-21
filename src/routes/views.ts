@@ -26,10 +26,9 @@ router.get("/", async (req, res) => {
       )
       .orderBy(desc(processRun.createdAt));
 
-    // TODO: james add it here
-    const n8nURL = "test";
+    const n8nBaseUrl = process.env.N8N_BASE_URL || "http://localhost:5678"
 
-    res.render("index", { processRuns: runs, n8nURL });
+    res.render("index", { processRuns: runs, n8nBaseUrl });
   } catch (error) {
     console.error("Error fetching process runs:", error);
     res.status(500).render("index", {
