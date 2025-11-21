@@ -23,6 +23,7 @@ This project uses Drizzle ORM with PostgreSQL. To set up the database:
    Create a `.env` file in the root directory:
    ```
    DATABASE_URL=postgresql://localhost:5432/n8n_express_api
+   DATABASE_URL=http://localhost:3000/
    ```
 
 4. **Generate and run migrations**:
