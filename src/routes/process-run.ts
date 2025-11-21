@@ -5,6 +5,8 @@ import { fieldProcessingStatus, processRun } from '../db/schema';
 
 const router = Router();
 
+const n8nBaseUrl = process.env.N8N_BASE_URL || "http://localhost:5678"
+
 router.post('/api/process-run', async (req, res) => {
   try {
     const { fieldId, workflowMetadata } = req.body;
@@ -52,9 +54,10 @@ router.post('/api/process-run', async (req, res) => {
   }
 });
 
-router.put('/api/process-run', async (req, res) => {
+router.put('/api/process-run/:id', async (req, res) => {
   try {
-    const { id, status } = req.body;
+    const { id } = req.params;
+    const { status } = req.body;
 
     if (!id) {
       return res.status(400).json({ error: 'Process run ID is required' });
@@ -99,6 +102,44 @@ router.put('/api/process-run', async (req, res) => {
   } catch (error) {
     console.error('Error updating process run:', error);
     res.status(500).json({ error: 'Failed to update process run' });
+  }
+});
+
+router.get('/api/process-run/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: 'Process run ID is required' });
+    }
+
+    // Retrieve the process run by ID
+    const [selectedProcessRun] = await db
+      .select()
+      .from(processRun)
+      .where(eq(processRun.id, Number.parseInt(id, 10)));
+
+    if (!selectedProcessRun) {
+      return res.status(404).json({ error: 'Process run not found' });
+    }
+
+    type ExtendedResponse = typeof selectedProcessRun & {
+      n8nExecutionUrl?: string;
+    };
+
+    // Add an n8n execution URL
+    const { workflowId, executionId } = selectedProcessRun.workflowMetadata || {};
+    const n8nExecutionUrl = `${n8nBaseUrl}workflow/${workflowId}/executions/${executionId}`;
+    const extendedResponse: ExtendedResponse = {
+      ...selectedProcessRun,
+      n8nExecutionUrl,
+
+    }
+    
+    res.json(extendedResponse);
+  } catch (error) {
+    console.error('Error getting process run:', error);
+    res.status(500).json({ error: 'Failed to get process run' });
   }
 });
 
