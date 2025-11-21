@@ -11,7 +11,11 @@ router.get("/", async (req, res) => {
       .select()
       .from(processRun)
       .orderBy(desc(processRun.createdAt));
-    res.render("index", { processRuns: runs });
+
+    // TODO: james add it here
+    const n8nURL = "test";
+
+    res.render("index", { processRuns: runs, n8nURL });
   } catch (error) {
     console.error("Error fetching process runs:", error);
     res.status(500).render("index", {
