@@ -1,0 +1,43 @@
+{
+  "inputs": [
+    {
+      "id": 1,
+      "fieldId": "F001",
+      "mainCropCropType": "Wheat",
+      "mainCropSeedingMonth": 3,
+      "mainCropSeedingYear": 2025,
+      "mainCropYieldValue": 4500.5,
+      "mainCropYieldUnit": "kg",
+      "mainCropExpectedYieldValue": 5000.0,
+      "mainCropExpectedYieldUnit": "kg",
+      "mainCropReasonForFailedHarvest": null,
+      "mainCropHarvestMonth": 8,
+      "mainCropResidueManagementType": "incorporated",
+      "coverCropWereGrown": true,
+      "coverCropSeedingMonth": 9,
+      "coverCropSeedingYear": 2025,
+      "coverCropTerminationMonth": 12,
+      "coverCropTerminationYear": 2025
+    },
+    {
+      "id": 2,
+      "fieldId": "F002",
+      "mainCropCropType": "Corn",
+      "mainCropSeedingMonth": 4,
+      "mainCropSeedingYear": 2025,
+      "mainCropYieldValue": 8500.75,
+      "mainCropYieldUnit": "kg",
+      "mainCropExpectedYieldValue": 9000.0,
+      "mainCropExpectedYieldUnit": "kg",
+      "mainCropReasonForFailedHarvest": "drought",
+      "mainCropHarvestMonth": 10,
+      "mainCropResidueManagementType": "left_on_field",
+      "coverCropWereGrown": false,
+      "coverCropSeedingMonth": null,
+      "coverCropSeedingYear": null,
+      "coverCropTerminationMonth": null,
+      "coverCropTerminationYear": null
+    }
+  ],
+  "timestamp": "2024-01-01T00:00:00Z"
+}
